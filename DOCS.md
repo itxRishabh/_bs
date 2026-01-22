@@ -12,6 +12,7 @@ Welcome to _bs — a modern WordPress starter theme built for Bootstrap 5 develo
 2. [Who is This For?](#who-is-this-for)
 3. [⚠️ You DON'T Need npm!](#️-important-you-dont-need-npm-to-use-this-theme)
 4. [🟢 Simple Path (No npm)](#-simple-path-just-download-and-use-no-npm)
+   - [🎨 Adding Custom CSS](#-adding-custom-css-simple-path)
 5. [🔵 Advanced Path (With npm)](#-advanced-path-with-npm-for-customization)
 6. [Quick Start (npm users)](#quick-start-5-minutes)
 7. [Detailed Setup Guide](#detailed-setup-guide)
@@ -149,22 +150,75 @@ Now you can:
 - Create new page templates
 - Add plugins
 
-### Adding Custom CSS (Simple Path)
+### 🎨 Adding Custom CSS (Simple Path)
 
-**Without touching any files:**
-1. Go to **Appearance → Customize → Additional CSS**
-2. Add your CSS:
+**No npm? No problem!** We've included a dedicated file for your custom styles:
+
+#### Method 1: Use `custom.css` (Recommended)
+
+The theme includes a special file at:
+```
+📁 your-theme/assets/css/custom.css
+```
+
+**Why use this file?**
+- ✅ Your changes survive theme updates
+- ✅ Overrides all default styles automatically
+- ✅ No npm or build tools needed
+- ✅ Just write CSS and save!
+
+**How to use it:**
+
+1. Open `assets/css/custom.css` in any text editor
+2. Add your styles:
+
 ```css
-/* Change primary color */
+/* =========================================
+   YOUR CUSTOM STYLES
+   Add all your custom CSS here.
+   This file loads AFTER all theme styles,
+   so your styles will override defaults.
+   ========================================= */
+
+/* Override primary button color */
+.btn-primary {
+    background-color: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+}
+
+/* Custom header styling */
+.site-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Override Bootstrap variables */
 :root {
     --bs-primary: #6f42c1;
+    --bs-primary-rgb: 111, 66, 193;
 }
 
-/* Your custom styles */
-.my-section {
-    padding: 4rem 0;
+/* Your custom section */
+.my-hero-section {
+    padding: 6rem 0;
+    background-color: #f8f9fa;
 }
 ```
+
+3. Save the file — changes appear immediately!
+
+> 💡 **Pro Tip:** This file is loaded last, so it automatically overrides Bootstrap and theme defaults. Use `!important` only when necessary.
+
+#### Method 2: WordPress Customizer
+
+For quick tweaks without FTP access:
+
+1. Go to **Appearance → Customize → Additional CSS**
+2. Add your CSS
+3. Click **Publish**
+
+> ⚠️ **Note:** Customizer CSS is stored in the database, not in files. Use `custom.css` for permanent, portable styles.
+
+---
 
 ### What You CAN Do (Simple Path)
 - ✅ Edit all PHP template files
