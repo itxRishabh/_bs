@@ -4,224 +4,365 @@
  *
  * @link https://woocommerce.com/
  *
- * @package _s
+ * @package _bs
  */
 
 /**
  * WooCommerce setup function.
- *
- * @link https://docs.woocommerce.com/document/third-party-custom-theme-compatibility/
- * @link https://github.com/woocommerce/woocommerce/wiki/Enabling-product-gallery-features-(zoom,-swipe,-lightbox)
- * @link https://github.com/woocommerce/woocommerce/wiki/Declaring-WooCommerce-support-in-themes
- *
- * @return void
  */
-function _s_woocommerce_setup() {
+function _bs_woocommerce_setup()
+{
 	add_theme_support(
 		'woocommerce',
 		array(
-			'thumbnail_image_width' => 150,
-			'single_image_width'    => 300,
-			'product_grid'          => array(
-				'default_rows'    => 3,
-				'min_rows'        => 1,
+			'thumbnail_image_width' => 300,
+			'single_image_width' => 600,
+			'product_grid' => array(
+				'default_rows' => 3,
+				'min_rows' => 1,
 				'default_columns' => 4,
-				'min_columns'     => 1,
-				'max_columns'     => 6,
+				'min_columns' => 1,
+				'max_columns' => 6,
 			),
 		)
 	);
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
+	add_theme_support('wc-product-gallery-zoom');
+	add_theme_support('wc-product-gallery-lightbox');
+	add_theme_support('wc-product-gallery-slider');
 }
-add_action( 'after_setup_theme', '_s_woocommerce_setup' );
-
-/**
- * WooCommerce specific scripts & stylesheets.
- *
- * @return void
- */
-function _s_woocommerce_scripts() {
-	wp_enqueue_style( '_s-woocommerce-style', get_template_directory_uri() . '/woocommerce.css', array(), _S_VERSION );
-
-	$font_path   = WC()->plugin_url() . '/assets/fonts/';
-	$inline_font = '@font-face {
-			font-family: "star";
-			src: url("' . $font_path . 'star.eot");
-			src: url("' . $font_path . 'star.eot?#iefix") format("embedded-opentype"),
-				url("' . $font_path . 'star.woff") format("woff"),
-				url("' . $font_path . 'star.ttf") format("truetype"),
-				url("' . $font_path . 'star.svg#star") format("svg");
-			font-weight: normal;
-			font-style: normal;
-		}';
-
-	wp_add_inline_style( '_s-woocommerce-style', $inline_font );
-}
-add_action( 'wp_enqueue_scripts', '_s_woocommerce_scripts' );
+add_action('after_setup_theme', '_bs_woocommerce_setup');
 
 /**
  * Disable the default WooCommerce stylesheet.
- *
- * Removing the default WooCommerce stylesheet and enqueing your own will
- * protect you during WooCommerce core updates.
- *
- * @link https://docs.woocommerce.com/document/disable-the-default-stylesheet/
  */
-add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
 /**
- * Add 'woocommerce-active' class to the body tag.
- *
- * @param  array $classes CSS classes applied to the body tag.
- * @return array $classes modified to include 'woocommerce-active' class.
+ * Add Bootstrap classes to WooCommerce wrapper.
  */
-function _s_woocommerce_active_body_class( $classes ) {
-	$classes[] = 'woocommerce-active';
-
-	return $classes;
+function _bs_woocommerce_wrapper_before()
+{
+	?>
+	<main id="primary" class="site-main py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-<?php echo (is_active_sidebar('sidebar-shop') && !is_product()) ? '9' : '12'; ?>">
+					<?php
 }
-add_filter( 'body_class', '_s_woocommerce_active_body_class' );
+add_action('woocommerce_before_main_content', '_bs_woocommerce_wrapper_before');
+
+function _bs_woocommerce_wrapper_after()
+{
+	?>
+				</div>
+				<?php if (is_active_sidebar('sidebar-shop') && !is_product()): ?>
+					<div class="col-lg-3">
+						<aside class="widget-area shop-sidebar">
+							<?php dynamic_sidebar('sidebar-shop'); ?>
+						</aside>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</main>
+	<?php
+}
+add_action('woocommerce_after_main_content', '_bs_woocommerce_wrapper_after');
 
 /**
- * Related Products Args.
- *
- * @param array $args related products args.
- * @return array $args related products args.
+ * Remove default WooCommerce sidebar.
  */
-function _s_woocommerce_related_products_args( $args ) {
-	$defaults = array(
-		'posts_per_page' => 3,
-		'columns'        => 3,
+remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+
+/**
+ * Register shop sidebar.
+ */
+function _bs_woocommerce_widgets_init()
+{
+	register_sidebar(
+		array(
+			'name' => esc_html__('Shop Sidebar', '_bs'),
+			'id' => 'sidebar-shop',
+			'description' => esc_html__('Sidebar for WooCommerce pages.', '_bs'),
+			'before_widget' => '<div id="%1$s" class="widget card mb-3 %2$s"><div class="card-body">',
+			'after_widget' => '</div></div>',
+			'before_title' => '<h5 class="widget-title card-title">',
+			'after_title' => '</h5>',
+		)
 	);
+}
+add_action('widgets_init', '_bs_woocommerce_widgets_init');
 
-	$args = wp_parse_args( $defaults, $args );
+/**
+ * Change number of products per row.
+ */
+function _bs_woocommerce_loop_columns()
+{
+	return 3;
+}
+add_filter('loop_shop_columns', '_bs_woocommerce_loop_columns');
 
+/**
+ * Change products per page.
+ */
+function _bs_woocommerce_products_per_page()
+{
+	return 12;
+}
+add_filter('loop_shop_per_page', '_bs_woocommerce_products_per_page');
+
+/**
+ * Add Bootstrap classes to product loop.
+ */
+function _bs_woocommerce_product_loop_start()
+{
+	echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+}
+add_action('woocommerce_before_shop_loop', '_bs_woocommerce_product_loop_start', 40);
+
+function _bs_woocommerce_product_loop_end()
+{
+	echo '</div>';
+}
+add_action('woocommerce_after_shop_loop', '_bs_woocommerce_product_loop_end', 5);
+
+/**
+ * Wrap each product in a column.
+ */
+function _bs_woocommerce_before_shop_loop_item()
+{
+	echo '<div class="col">';
+}
+add_action('woocommerce_before_shop_loop_item', '_bs_woocommerce_before_shop_loop_item', 5);
+
+function _bs_woocommerce_after_shop_loop_item()
+{
+	echo '</div>';
+}
+add_action('woocommerce_after_shop_loop_item', '_bs_woocommerce_after_shop_loop_item', 15);
+
+/**
+ * Product card wrapper.
+ */
+function _bs_woocommerce_before_shop_loop_item_title()
+{
+	echo '<div class="card h-100 product-card">';
+	echo '<div class="card-img-top product-thumbnail">';
+}
+add_action('woocommerce_before_shop_loop_item_title', '_bs_woocommerce_before_shop_loop_item_title', 5);
+
+function _bs_woocommerce_shop_loop_item_title()
+{
+	echo '</div><div class="card-body">';
+}
+add_action('woocommerce_before_shop_loop_item_title', '_bs_woocommerce_shop_loop_item_title', 15);
+
+function _bs_woocommerce_after_shop_loop_item_title()
+{
+	echo '</div></div>';
+}
+add_action('woocommerce_after_shop_loop_item', '_bs_woocommerce_after_shop_loop_item_title', 10);
+
+/**
+ * Add to cart button classes.
+ */
+function _bs_woocommerce_loop_add_to_cart_args($args)
+{
+	$args['class'] = str_replace('button', 'btn btn-primary btn-sm', $args['class']);
 	return $args;
 }
-add_filter( 'woocommerce_output_related_products_args', '_s_woocommerce_related_products_args' );
+add_filter('woocommerce_loop_add_to_cart_args', '_bs_woocommerce_loop_add_to_cart_args');
 
 /**
- * Remove default WooCommerce wrapper.
+ * Single product button classes.
  */
-remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
-remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
-
-if ( ! function_exists( '_s_woocommerce_wrapper_before' ) ) {
-	/**
-	 * Before Content.
-	 *
-	 * Wraps all WooCommerce content in wrappers which match the theme markup.
-	 *
-	 * @return void
-	 */
-	function _s_woocommerce_wrapper_before() {
-		?>
-			<main id="primary" class="site-main">
-		<?php
-	}
+function _bs_woocommerce_single_add_to_cart_args($args)
+{
+	$args['class'] = 'btn btn-primary btn-lg single_add_to_cart_button';
+	return $args;
 }
-add_action( 'woocommerce_before_main_content', '_s_woocommerce_wrapper_before' );
-
-if ( ! function_exists( '_s_woocommerce_wrapper_after' ) ) {
-	/**
-	 * After Content.
-	 *
-	 * Closes the wrapping divs.
-	 *
-	 * @return void
-	 */
-	function _s_woocommerce_wrapper_after() {
-		?>
-			</main><!-- #main -->
-		<?php
-	}
-}
-add_action( 'woocommerce_after_main_content', '_s_woocommerce_wrapper_after' );
+add_filter('woocommerce_single_add_to_cart_args', '_bs_woocommerce_single_add_to_cart_args');
 
 /**
- * Sample implementation of the WooCommerce Mini Cart.
- *
- * You can add the WooCommerce Mini Cart to header.php like so ...
- *
-	<?php
-		if ( function_exists( '_s_woocommerce_header_cart' ) ) {
-			_s_woocommerce_header_cart();
-		}
+ * Quantity input classes.
+ */
+function _bs_woocommerce_quantity_input_classes($classes)
+{
+	$classes[] = 'form-control';
+	return $classes;
+}
+add_filter('woocommerce_quantity_input_classes', '_bs_woocommerce_quantity_input_classes');
+
+/**
+ * Cart table classes.
+ */
+function _bs_woocommerce_cart_table_classes()
+{
+	return 'table table-bordered shop_table cart';
+}
+add_filter('woocommerce_cart_table_class', '_bs_woocommerce_cart_table_classes');
+
+/**
+ * Form field classes.
+ */
+function _bs_woocommerce_form_field_args($args, $key, $value)
+{
+	if (in_array($args['type'], array('text', 'email', 'tel', 'password', 'number', 'url'), true)) {
+		$args['input_class'][] = 'form-control';
+	}
+	if ('textarea' === $args['type']) {
+		$args['input_class'][] = 'form-control';
+	}
+	if ('select' === $args['type']) {
+		$args['input_class'][] = 'form-select';
+	}
+	if ('checkbox' === $args['type']) {
+		$args['input_class'][] = 'form-check-input';
+		$args['label_class'][] = 'form-check-label';
+	}
+	return $args;
+}
+add_filter('woocommerce_form_field_args', '_bs_woocommerce_form_field_args', 10, 3);
+
+/**
+ * Breadcrumb defaults.
+ */
+function _bs_woocommerce_breadcrumb_defaults($defaults)
+{
+	$defaults['delimiter'] = ' <span class="breadcrumb-separator mx-2">/</span> ';
+	$defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb mb-4" aria-label="Breadcrumb"><ol class="breadcrumb mb-0">';
+	$defaults['wrap_after'] = '</ol></nav>';
+	$defaults['before'] = '<li class="breadcrumb-item">';
+	$defaults['after'] = '</li>';
+	return $defaults;
+}
+add_filter('woocommerce_breadcrumb_defaults', '_bs_woocommerce_breadcrumb_defaults');
+
+/**
+ * Pagination args.
+ */
+function _bs_woocommerce_pagination_args($args)
+{
+	$args['prev_text'] = '<i class="bi bi-chevron-left"></i>';
+	$args['next_text'] = '<i class="bi bi-chevron-right"></i>';
+	return $args;
+}
+add_filter('woocommerce_pagination_args', '_bs_woocommerce_pagination_args');
+
+/**
+ * Review form args.
+ */
+function _bs_woocommerce_product_review_comment_form_args($args)
+{
+	$args['class_form'] = 'comment-form';
+	$args['class_submit'] = 'btn btn-primary';
+	return $args;
+}
+add_filter('woocommerce_product_review_comment_form_args', '_bs_woocommerce_product_review_comment_form_args');
+
+/**
+ * Sale badge.
+ */
+function _bs_woocommerce_sale_flash($html, $post, $product)
+{
+	return '<span class="badge bg-danger position-absolute top-0 start-0 m-2 onsale">' . esc_html__('Sale!', '_bs') . '</span>';
+}
+add_filter('woocommerce_sale_flash', '_bs_woocommerce_sale_flash', 10, 3);
+
+/**
+ * Mini cart in header.
+ */
+function _bs_woocommerce_header_cart()
+{
+	if (!class_exists('WooCommerce')) {
+		return;
+	}
 	?>
- */
-
-if ( ! function_exists( '_s_woocommerce_cart_link_fragment' ) ) {
-	/**
-	 * Cart Fragments.
-	 *
-	 * Ensure cart contents update when products are added to the cart via AJAX.
-	 *
-	 * @param array $fragments Fragments to refresh via AJAX.
-	 * @return array Fragments to refresh via AJAX.
-	 */
-	function _s_woocommerce_cart_link_fragment( $fragments ) {
-		ob_start();
-		_s_woocommerce_cart_link();
-		$fragments['a.cart-contents'] = ob_get_clean();
-
-		return $fragments;
-	}
-}
-add_filter( 'woocommerce_add_to_cart_fragments', '_s_woocommerce_cart_link_fragment' );
-
-if ( ! function_exists( '_s_woocommerce_cart_link' ) ) {
-	/**
-	 * Cart Link.
-	 *
-	 * Displayed a link to the cart including the number of items present and the cart total.
-	 *
-	 * @return void
-	 */
-	function _s_woocommerce_cart_link() {
-		?>
-		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', '_s' ); ?>">
-			<?php
-			$item_count_text = sprintf(
-				/* translators: number of items in the mini cart. */
-				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), '_s' ),
-				WC()->cart->get_cart_contents_count()
-			);
-			?>
-			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
+	<div class="header-cart nav-item dropdown">
+		<a class="nav-link dropdown-toggle position-relative" href="<?php echo esc_url(wc_get_cart_url()); ?>"
+			id="headerCart" data-bs-toggle="dropdown" aria-expanded="false">
+			<i class="bi bi-cart3"></i>
+			<span class="cart-count badge bg-primary rounded-pill position-absolute top-0 start-100 translate-middle">
+				<?php echo esc_html(WC()->cart->get_cart_contents_count()); ?>
+			</span>
 		</a>
-		<?php
-	}
+		<div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 300px;" aria-labelledby="headerCart">
+			<h6 class="dropdown-header"><?php esc_html_e('Your Cart', '_bs'); ?></h6>
+			<?php the_widget('WC_Widget_Cart', 'title='); ?>
+		</div>
+	</div>
+	<?php
 }
 
-if ( ! function_exists( '_s_woocommerce_header_cart' ) ) {
-	/**
-	 * Display Header Cart.
-	 *
-	 * @return void
-	 */
-	function _s_woocommerce_header_cart() {
-		if ( is_cart() ) {
-			$class = 'current-menu-item';
-		} else {
-			$class = '';
-		}
-		?>
-		<ul id="site-header-cart" class="site-header-cart">
-			<li class="<?php echo esc_attr( $class ); ?>">
-				<?php _s_woocommerce_cart_link(); ?>
-			</li>
-			<li>
-				<?php
-				$instance = array(
-					'title' => '',
-				);
-
-				the_widget( 'WC_Widget_Cart', $instance );
-				?>
-			</li>
-		</ul>
-		<?php
-	}
+/**
+ * Update cart count via AJAX.
+ */
+function _bs_woocommerce_add_to_cart_fragments($fragments)
+{
+	$fragments['.cart-count'] = '<span class="cart-count badge bg-primary rounded-pill position-absolute top-0 start-100 translate-middle">' . WC()->cart->get_cart_contents_count() . '</span>';
+	return $fragments;
 }
+add_filter('woocommerce_add_to_cart_fragments', '_bs_woocommerce_add_to_cart_fragments');
+
+/**
+ * Related products args.
+ */
+function _bs_woocommerce_related_products_args($args)
+{
+	$args['posts_per_page'] = 4;
+	$args['columns'] = 4;
+	return $args;
+}
+add_filter('woocommerce_output_related_products_args', '_bs_woocommerce_related_products_args');
+
+/**
+ * Checkout button class.
+ */
+function _bs_woocommerce_proceed_to_checkout()
+{
+	remove_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
+	?>
+	<a href="<?php echo esc_url(wc_get_checkout_url()); ?>" class="checkout-button btn btn-primary btn-lg w-100">
+		<?php esc_html_e('Proceed to checkout', '_bs'); ?>
+	</a>
+	<?php
+}
+add_action('woocommerce_proceed_to_checkout', '_bs_woocommerce_proceed_to_checkout', 20);
+
+/**
+ * Update cart button class.
+ */
+function _bs_woocommerce_cart_update_button($button)
+{
+	return str_replace('button', 'btn btn-outline-secondary', $button);
+}
+add_filter('woocommerce_cart_item_remove_link', '_bs_woocommerce_cart_update_button');
+
+/**
+ * Coupon form button.
+ */
+function _bs_woocommerce_coupon_button_class()
+{
+	return 'btn btn-outline-secondary';
+}
+add_filter('woocommerce_coupon_apply_button_class', '_bs_woocommerce_coupon_button_class');
+
+/**
+ * Order button class.
+ */
+function _bs_woocommerce_order_button_html($html)
+{
+	return str_replace('class="button', 'class="btn btn-success btn-lg w-100', $html);
+}
+add_filter('woocommerce_order_button_html', '_bs_woocommerce_order_button_html');
+
+/**
+ * My Account navigation classes.
+ */
+function _bs_woocommerce_account_menu_item_classes($classes, $endpoint)
+{
+	$classes[] = 'list-group-item';
+	$classes[] = 'list-group-item-action';
+	return $classes;
+}
+add_filter('woocommerce_account_menu_item_classes', '_bs_woocommerce_account_menu_item_classes', 10, 2);

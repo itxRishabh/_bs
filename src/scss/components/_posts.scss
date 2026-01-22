@@ -1,0 +1,229 @@
+// ==========================================================================
+// Posts Component
+// Post cards, entries, and archive styles
+// ==========================================================================
+
+// Article/Post entry
+.post,
+.page {
+    margin-bottom: 2rem;
+}
+
+// Entry header
+.entry-header {
+    margin-bottom: 1.5rem;
+}
+
+.entry-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+
+    a {
+        color: $dark;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+
+// Entry meta
+.entry-meta {
+    font-size: 0.875rem;
+    color: $text-muted;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    a {
+        color: $text-muted;
+        text-decoration: none;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    .posted-on,
+    .byline,
+    .cat-links,
+    .comments-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        i {
+            font-size: 0.9em;
+        }
+    }
+}
+
+// Entry content
+.entry-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+
+    >*:first-child {
+        margin-top: 0;
+    }
+
+    >*:last-child {
+        margin-bottom: 0;
+    }
+
+    // Dropcap for first paragraph
+    &.has-dropcap>p:first-of-type::first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 1;
+        font-weight: 700;
+        margin-right: 0.75rem;
+        color: $primary;
+    }
+}
+
+// Featured image
+.post-thumbnail {
+    margin-bottom: 1.5rem;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: $border-radius-lg;
+    }
+
+    a {
+        display: block;
+        overflow: hidden;
+        border-radius: $border-radius-lg;
+
+        img {
+            transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.03);
+        }
+    }
+}
+
+// Entry footer
+.entry-footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $border-color;
+    font-size: 0.875rem;
+    color: $text-muted;
+
+    .cat-links,
+    .tags-links,
+    .edit-link {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .tag-badge {
+        @extend .badge;
+        @extend .bg-secondary;
+        font-weight: normal;
+        margin-right: 0.25rem;
+    }
+}
+
+// Sticky post indicator
+.sticky {
+    .entry-header::before {
+        content: "\f08d"; // pin icon
+        font-family: "bootstrap-icons";
+        display: inline-block;
+        margin-right: 0.5rem;
+        color: $primary;
+    }
+}
+
+// Post card (for archives/grids)
+.post-card {
+    @extend .card;
+    @extend .h-100;
+    border: none;
+    box-shadow: $box-shadow-sm;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $box-shadow;
+    }
+
+    .post-thumbnail {
+        margin: 0;
+
+        img {
+            border-radius: $border-radius-lg $border-radius-lg 0 0;
+        }
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .entry-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .entry-meta {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .entry-excerpt {
+        color: $text-muted;
+        font-size: 0.95rem;
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+// Page links (multi-page posts)
+.page-links {
+    clear: both;
+    margin: 2rem 0;
+
+    .page-links-title {
+        margin-right: 0.5rem;
+    }
+
+    a,
+    >span {
+        @extend .btn;
+        @extend .btn-sm;
+        margin: 0 0.25rem;
+    }
+
+    >span:not(.page-links-title) {
+        @extend .btn-primary;
+    }
+
+    a {
+        @extend .btn-outline-primary;
+    }
+}
+
+// No posts message
+.no-results {
+    text-align: center;
+    padding: 3rem 1.5rem;
+
+    .page-title {
+        margin-bottom: 1rem;
+    }
+
+    .page-content {
+        color: $text-muted;
+    }
+}

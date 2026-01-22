@@ -1,0 +1,220 @@
+// ==========================================================================
+// WordPress Block Styles
+// Bootstrap styling for Gutenberg blocks
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Core Block Overrides
+// --------------------------------------------------------------------------
+
+// Buttons block
+.wp-block-button {
+    .wp-block-button__link {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+
+    &.is-style-outline .wp-block-button__link {
+        @extend .btn-outline-primary;
+    }
+}
+
+// Quote block
+.wp-block-quote {
+    @extend .blockquote;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid $primary;
+    background-color: rgba($primary, 0.05);
+    border-radius: $border-radius;
+
+    cite {
+        @extend .blockquote-footer;
+        margin-top: 0.5rem;
+    }
+}
+
+// Pullquote
+.wp-block-pullquote {
+    padding: 2rem;
+    text-align: center;
+    border-top: 4px solid $primary;
+    border-bottom: 4px solid $primary;
+
+    blockquote {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+}
+
+// Code block
+.wp-block-code {
+    @extend .bg-dark;
+    @extend .text-light;
+    padding: 1.5rem;
+    border-radius: $border-radius;
+    overflow-x: auto;
+
+    code {
+        color: inherit;
+        background: transparent;
+    }
+}
+
+// Preformatted
+.wp-block-preformatted {
+    @extend .bg-light;
+    padding: 1.5rem;
+    border-radius: $border-radius;
+    white-space: pre-wrap;
+}
+
+// Table block
+.wp-block-table {
+    table {
+        @extend .table;
+        @extend .table-bordered;
+    }
+
+    &.is-style-stripes table {
+        @extend .table-striped;
+    }
+}
+
+// Image block
+.wp-block-image {
+    margin-bottom: 1.5rem;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: $border-radius;
+    }
+
+    figcaption {
+        @extend .figure-caption;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+
+// Gallery block
+.wp-block-gallery {
+    display: grid;
+    gap: 1rem;
+
+    &.columns-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.columns-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include media-breakpoint-down(md) {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    @include media-breakpoint-down(sm) {
+        grid-template-columns: 1fr !important;
+    }
+
+    .wp-block-image {
+        margin: 0;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+}
+
+// Columns block
+.wp-block-columns {
+    @extend .row;
+
+    .wp-block-column {
+        @extend .col;
+    }
+}
+
+// Separator
+.wp-block-separator {
+    border: 0;
+    border-top: 1px solid $border-color;
+    margin: 2rem 0;
+
+    &.is-style-wide {
+        border-top-width: 2px;
+    }
+
+    &.is-style-dots {
+        border: 0;
+        text-align: center;
+
+        &::before {
+            content: "···";
+            font-size: 1.5rem;
+            letter-spacing: 1rem;
+            color: $text-muted;
+        }
+    }
+}
+
+// Cover block
+.wp-block-cover {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 430px;
+    padding: 2rem;
+
+    .wp-block-cover__inner-container {
+        position: relative;
+        z-index: 1;
+        color: $white;
+        text-align: center;
+    }
+}
+
+// Group block
+.wp-block-group {
+    &.has-background {
+        padding: 2rem;
+        border-radius: $border-radius;
+    }
+}
+
+// List block
+.wp-block-list {
+    padding-left: 1.5rem;
+
+    li {
+        margin-bottom: 0.5rem;
+    }
+}
+
+// Embed blocks
+.wp-block-embed {
+    margin-bottom: 1.5rem;
+
+    .wp-block-embed__wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

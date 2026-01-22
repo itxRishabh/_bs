@@ -1,0 +1,32 @@
+/*
+ * Custom CSS for _bs Theme
+ * ========================
+ * 
+ * Add your custom styles here!
+ * 
+ * This file is loaded AFTER Bootstrap and the theme styles,
+ * so your CSS will override everything.
+ * 
+ * TIPS:
+ * - You don't need !important in most cases
+ * - Use Bootstrap utility classes when possible
+ * - This file survives theme updates if you're careful
+ * 
+ * Example:
+ * 
+ * .my-custom-hero {
+ *     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ *     padding: 6rem 0;
+ *     color: white;
+ * }
+ * 
+ * .btn-custom {
+ *     background-color: #ff6b6b;
+ *     border-color: #ff6b6b;
+ * }
+ * 
+ */
+
+/* ==========================================================================
+   Your Custom Styles Start Here
+   ========================================================================== */

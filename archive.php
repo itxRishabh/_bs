@@ -4,48 +4,59 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package _s
+ * @package _bs
  */
 
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+<main id="primary" class="site-main py-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<?php if (have_posts()): ?>
 
-		<?php if ( have_posts() ) : ?>
+					<header class="archive-header">
+						<?php
+						the_archive_title('<h1 class="archive-title">', '</h1>');
+						the_archive_description('<div class="archive-description">', '</div>');
+						?>
+					</header><!-- .archive-header -->
 
-			<header class="page-header">
-				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
+					<div class="posts-list">
+						<?php
+						while (have_posts()):
+							the_post();
+
+							get_template_part('template-parts/content', get_post_type());
+
+						endwhile;
+						?>
+					</div>
+
+					<?php
+					the_posts_pagination(
+						array(
+							'mid_size' => 2,
+							'prev_text' => '<i class="bi bi-chevron-left"></i> ' . esc_html__('Previous', '_bs'),
+							'next_text' => esc_html__('Next', '_bs') . ' <i class="bi bi-chevron-right"></i>',
+						)
+					);
+
+				else:
+
+					get_template_part('template-parts/content', 'none');
+
+				endif;
 				?>
-			</header><!-- .page-header -->
+			</div>
 
-			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
-
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
-
-			endwhile;
-
-			the_posts_navigation();
-
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
-	</main><!-- #main -->
+			<div class="col-lg-4">
+				<?php get_sidebar(); ?>
+			</div>
+		</div>
+	</div>
+</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();

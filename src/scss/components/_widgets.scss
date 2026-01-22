@@ -1,0 +1,233 @@
+// ==========================================================================
+// Widgets Component
+// Sidebar and footer widget styles
+// ==========================================================================
+
+.widget {
+    margin-bottom: 2rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.widget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid $primary;
+}
+
+// Widget content defaults
+.widget {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba($border-color, 0.5);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            a {
+                color: $body-color;
+                text-decoration: none;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+
+        // Nested lists
+        ul {
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+
+            li {
+                border-bottom: none;
+                padding: 0.25rem 0;
+            }
+        }
+    }
+}
+
+// Search widget
+.widget_search {
+    .search-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .search-field {
+        @extend .form-control;
+        flex: 1;
+    }
+
+    .search-submit {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+}
+
+// Calendar widget
+.widget_calendar {
+    table {
+        @extend .table;
+        @extend .table-sm;
+        text-align: center;
+
+        caption {
+            caption-side: top;
+            text-align: center;
+            font-weight: 600;
+            color: $dark;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        #today {
+            background-color: $primary;
+            color: $white;
+            font-weight: 600;
+        }
+    }
+
+    .wp-calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+    }
+}
+
+// Recent posts/comments
+.widget_recent_entries,
+.widget_recent_comments {
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .post-date,
+    .comment-author-link {
+        font-size: 0.8rem;
+        color: $text-muted;
+    }
+}
+
+// Categories/Archives with counts
+.widget_categories,
+.widget_archive {
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        a {
+            flex: 1;
+        }
+
+        // Post count
+        span:last-child {
+            @extend .badge;
+            @extend .bg-secondary;
+            font-weight: normal;
+        }
+    }
+
+    // Dropdown style
+    select {
+        @extend .form-select;
+        width: 100%;
+    }
+}
+
+// Tag cloud
+.widget_tag_cloud {
+    .tagcloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        a {
+            @extend .badge;
+            @extend .bg-light;
+            @extend .text-dark;
+            font-weight: normal;
+            text-decoration: none;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: $primary !important;
+                color: $white !important;
+            }
+        }
+    }
+}
+
+// RSS widget
+.widget_rss {
+    .rss-widget-icon {
+        margin-right: 0.25rem;
+    }
+
+    .rsswidget {
+        font-weight: 600;
+    }
+
+    .rss-date {
+        display: block;
+        font-size: 0.8rem;
+        color: $text-muted;
+    }
+
+    .rssSummary {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: $text-muted;
+    }
+}
+
+// Text/Custom HTML widget
+.widget_text,
+.widget_custom_html {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+// Nav menu widget
+.widget_nav_menu {
+    .menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sub-menu {
+        padding-left: 1rem;
+    }
+}
+
+// Media widgets (image, audio, video)
+.widget_media_image,
+.widget_media_audio,
+.widget_media_video {
+
+    img,
+    audio,
+    video {
+        max-width: 100%;
+        height: auto;
+    }
+}

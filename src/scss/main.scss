@@ -1,0 +1,57 @@
+// ==========================================================================
+// _bs - WordPress Starter Theme for Bootstrap 5
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// 1. Custom Variables (must come before Bootstrap)
+// --------------------------------------------------------------------------
+@use "variables" as *;
+
+// --------------------------------------------------------------------------
+// 2. Bootstrap Core
+// --------------------------------------------------------------------------
+@import "~bootstrap/scss/bootstrap";
+
+// --------------------------------------------------------------------------
+// 3. Bootstrap Icons
+// --------------------------------------------------------------------------
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+// --------------------------------------------------------------------------
+// 4. Theme Custom Variables (after Bootstrap for access to Bootstrap vars)
+// --------------------------------------------------------------------------
+$_bs-content-width: 720px;
+$_bs-wide-width: 1140px;
+$_bs-sidebar-width: 300px;
+
+// --------------------------------------------------------------------------
+// 5. WordPress Core Styles
+// --------------------------------------------------------------------------
+@import "wordpress/accessibility";
+@import "wordpress/alignments";
+@import "wordpress/blocks";
+@import "wordpress/editor";
+
+// --------------------------------------------------------------------------
+// 6. Theme Components
+// --------------------------------------------------------------------------
+@import "components/header";
+@import "components/navigation";
+@import "components/footer";
+@import "components/posts";
+@import "components/comments";
+@import "components/widgets";
+@import "components/sidebar";
+@import "components/forms";
+
+// --------------------------------------------------------------------------
+// 7. Page Templates
+// --------------------------------------------------------------------------
+@import "templates/archive";
+@import "templates/search";
+@import "templates/404";
+
+// --------------------------------------------------------------------------
+// 8. Plugins
+// --------------------------------------------------------------------------
+@import "plugins/woocommerce";

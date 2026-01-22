@@ -1,0 +1,135 @@
+// ==========================================================================
+// Footer Component
+// Site footer styles
+// ==========================================================================
+
+.site-footer {
+    background-color: $dark;
+    color: rgba($white, 0.8);
+    padding: 3rem 0 1.5rem;
+    margin-top: auto;
+
+    a {
+        color: rgba($white, 0.8);
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.footer-widgets {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba($white, 0.1);
+    margin-bottom: 2rem;
+
+    .widget {
+        margin-bottom: 1.5rem;
+    }
+
+    .widget-title {
+        color: $white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.footer-navigation {
+    .nav {
+        gap: 1rem;
+    }
+
+    .nav-link {
+        color: rgba($white, 0.7);
+        padding: 0;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.site-info {
+    font-size: 0.875rem;
+    color: rgba($white, 0.6);
+
+    .sep {
+        margin: 0 0.5rem;
+    }
+}
+
+// Back to top button
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    background-color: $primary;
+    color: $white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+    cursor: pointer;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:hover {
+        background-color: darken($primary, 10%);
+        transform: translateY(-3px);
+    }
+
+    i {
+        font-size: 1.25rem;
+    }
+}
+
+// Light footer variant
+.site-footer.footer-light {
+    background-color: $light;
+    color: $body-color;
+
+    a {
+        color: $body-color;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    .footer-widgets {
+        border-bottom-color: rgba($dark, 0.1);
+    }
+
+    .widget-title {
+        color: $dark;
+    }
+
+    .site-info {
+        color: $text-muted;
+    }
+}

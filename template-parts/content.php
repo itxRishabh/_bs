@@ -4,60 +4,68 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package _s
+ * @package _bs
  */
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('mb-4 pb-4 border-bottom'); ?>>
+	<?php _bs_post_thumbnail(); ?>
+
 	<header class="entry-header">
 		<?php
-		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
-		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+		if (is_singular()):
+			the_title('<h1 class="entry-title">', '</h1>');
+		else:
+			the_title('<h2 class="entry-title h3"><a href="' . esc_url(get_permalink()) . '" rel="bookmark">', '</a></h2>');
 		endif;
 
-		if ( 'post' === get_post_type() ) :
+		if ('post' === get_post_type()):
 			?>
 			<div class="entry-meta">
 				<?php
-				_s_posted_on();
-				_s_posted_by();
+				_bs_posted_on();
+				_bs_posted_by();
 				?>
 			</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-	<?php _s_post_thumbnail(); ?>
-
 	<div class="entry-content">
 		<?php
-		the_content(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', '_s' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				wp_kses_post( get_the_title() )
-			)
-		);
+		if (is_singular()):
+			the_content(
+				sprintf(
+					wp_kses(
+						/* translators: %s: Name of current post. Only visible to screen readers */
+						__('Continue reading<span class="visually-hidden"> "%s"</span>', '_bs'),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					wp_kses_post(get_the_title())
+				)
+			);
 
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', '_s' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
+			wp_link_pages(
+				array(
+					'before' => '<div class="page-links">' . esc_html__('Pages:', '_bs'),
+					'after' => '</div>',
+				)
+			);
+		else:
+			the_excerpt();
+			?>
+			<a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm">
+				<?php esc_html_e('Read More', '_bs'); ?>
+				<i class="bi bi-arrow-right ms-1"></i>
+			</a>
+		<?php endif; ?>
 	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
-		<?php _s_entry_footer(); ?>
+	<footer class="entry-footer mt-3">
+		<?php _bs_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

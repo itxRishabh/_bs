@@ -1,0 +1,50 @@
+// ==========================================================================
+// WordPress Block Editor Styles
+// Styles for the Gutenberg editor interface
+// ==========================================================================
+
+// Editor wrapper
+.editor-styles-wrapper {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $body-color;
+
+    // Typography in editor
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: $headings-font-weight;
+        line-height: $headings-line-height;
+        margin-bottom: $headings-margin-bottom;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    a {
+        color: $primary;
+        text-decoration: underline;
+
+        &:hover {
+            color: darken($primary, 15%);
+        }
+    }
+}
+
+// Content width in editor
+.wp-block {
+    max-width: $_bs-content-width;
+}
+
+.wp-block[data-align="wide"] {
+    max-width: $_bs-wide-width;
+}
+
+.wp-block[data-align="full"] {
+    max-width: none;
+}

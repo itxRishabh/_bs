@@ -1,0 +1,68 @@
+// ==========================================================================
+// Header Component
+// Site header and branding styles
+// ==========================================================================
+
+.site-header {
+    background-color: $light;
+    border-bottom: 1px solid rgba($dark, 0.1);
+
+    // Sticky header shadow on scroll
+    &.scrolled {
+        box-shadow: $box-shadow-sm;
+    }
+}
+
+.site-branding {
+    display: flex;
+    align-items: center;
+
+    .custom-logo-link {
+        display: flex;
+        align-items: center;
+
+        img {
+            max-height: 50px;
+            width: auto;
+        }
+    }
+}
+
+.site-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    a {
+        color: $dark;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+
+.site-description {
+    margin: 0;
+    font-size: 0.875rem;
+    color: $text-muted;
+}
+
+// Dark header variant
+.site-header.navbar-dark {
+    background-color: $dark;
+
+    .site-title a {
+        color: $white;
+
+        &:hover {
+            color: rgba($white, 0.8);
+        }
+    }
+
+    .site-description {
+        color: rgba($white, 0.6);
+    }
+}

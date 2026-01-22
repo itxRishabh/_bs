@@ -1,0 +1,67 @@
+// ==========================================================================
+// WordPress Alignments
+// Classes for content alignment in the block editor
+// ==========================================================================
+
+// WordPress alignment classes mapped to Bootstrap
+.alignnone {
+    margin: 1rem 0;
+}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.alignleft {
+    float: left;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.alignright {
+    float: right;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+// Wide and full alignments (Gutenberg)
+.alignwide {
+    max-width: $_bs-wide-width;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include media-breakpoint-up(xl) {
+        margin-left: calc(50% - #{$_bs-wide-width / 2});
+        margin-right: calc(50% - #{$_bs-wide-width / 2});
+        width: $_bs-wide-width;
+        max-width: 100vw;
+    }
+}
+
+.alignfull {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+// Image captions
+.wp-caption {
+    max-width: 100%;
+    margin-bottom: 1rem;
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.wp-caption-text {
+    @extend .figure-caption;
+    padding-top: 0.5rem;
+    text-align: center;
+}

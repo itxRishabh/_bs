@@ -1,0 +1,107 @@
+// ==========================================================================
+// Forms Component
+// WordPress form elements styled with Bootstrap
+// ==========================================================================
+
+// Search form
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+
+    .search-field {
+        @extend .form-control;
+        flex: 1;
+    }
+
+    .search-submit {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+}
+
+// Password protected posts
+.post-password-form {
+    p {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        @extend .form-label;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    input[type="password"] {
+        @extend .form-control;
+        max-width: 300px;
+        display: inline-block;
+        margin-right: 0.5rem;
+    }
+
+    input[type="submit"] {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+}
+
+// General WordPress forms
+.wpcf7-form,
+.wpforms-form {
+    label {
+        @extend .form-label;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    input[type="password"],
+    textarea {
+        @extend .form-control;
+    }
+
+    select {
+        @extend .form-select;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        @extend .form-check-input;
+    }
+
+    input[type="submit"],
+    button[type="submit"] {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+}
+
+// Form validation states
+.wpcf7-not-valid,
+.wpforms-error {
+    border-color: $danger !important;
+}
+
+.wpcf7-not-valid-tip,
+.wpforms-error-msg {
+    color: $danger;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.wpcf7-response-output {
+    @extend .alert;
+    margin-top: 1rem;
+
+    &.wpcf7-mail-sent-ok {
+        @extend .alert-success;
+    }
+
+    &.wpcf7-validation-errors,
+    &.wpcf7-spam-blocked,
+    &.wpcf7-mail-sent-ng {
+        @extend .alert-danger;
+    }
+}

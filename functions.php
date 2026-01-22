@@ -1,62 +1,54 @@
 <?php
 /**
- * _s functions and definitions
+ * _bs functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package _s
+ * @package _bs
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
+if (!defined('_BS_VERSION')) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+	define('_BS_VERSION', '1.0.0');
 }
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
  */
-function _s_setup() {
+function _bs_setup()
+{
 	/*
-		* Make theme available for translation.
-		* Translations can be filed in the /languages/ directory.
-		* If you're building a theme based on _s, use a find and replace
-		* to change '_s' to the name of your theme in all the template files.
-		*/
-	load_theme_textdomain( '_s', get_template_directory() . '/languages' );
+	 * Make theme available for translation.
+	 */
+	load_theme_textdomain('_bs', get_template_directory() . '/languages');
 
 	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
 
 	/*
-		* Let WordPress manage the document title.
-		* By adding theme support, we declare that this theme does not use a
-		* hard-coded <title> tag in the document head, and expect WordPress to
-		* provide it for us.
-		*/
-	add_theme_support( 'title-tag' );
+	 * Let WordPress manage the document title.
+	 */
+	add_theme_support('title-tag');
 
 	/*
-		* Enable support for Post Thumbnails on posts and pages.
-		*
-		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		*/
-	add_theme_support( 'post-thumbnails' );
+	 * Enable support for Post Thumbnails on posts and pages.
+	 */
+	add_theme_support('post-thumbnails');
 
-	// This theme uses wp_nav_menu() in one location.
+	/*
+	 * Register navigation menus.
+	 */
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', '_s' ),
+			'primary' => esc_html__('Primary Menu', '_bs'),
+			'footer' => esc_html__('Footer Menu', '_bs'),
 		)
 	);
 
 	/*
-		* Switch default core markup for search form, comment form, and comments
-		* to output valid HTML5.
-		*/
+	 * Switch default core markup for search form, comment form, and comments
+	 * to output valid HTML5.
+	 */
 	add_theme_support(
 		'html5',
 		array(
@@ -74,7 +66,7 @@ function _s_setup() {
 	add_theme_support(
 		'custom-background',
 		apply_filters(
-			'_s_custom_background_args',
+			'_bs_custom_background_args',
 			array(
 				'default-color' => 'ffffff',
 				'default-image' => '',
@@ -83,24 +75,37 @@ function _s_setup() {
 	);
 
 	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+	add_theme_support('customize-selective-refresh-widgets');
 
 	/**
 	 * Add support for core custom logo.
-	 *
-	 * @link https://codex.wordpress.org/Theme_Logo
 	 */
 	add_theme_support(
 		'custom-logo',
 		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
+			'height' => 250,
+			'width' => 250,
+			'flex-width' => true,
 			'flex-height' => true,
 		)
 	);
+
+	// Add support for full and wide align images.
+	add_theme_support('align-wide');
+
+	// Add support for responsive embedded content.
+	add_theme_support('responsive-embeds');
+
+	// Add support for block styles.
+	add_theme_support('wp-block-styles');
+
+	// Add support for editor styles.
+	add_theme_support('editor-styles');
+
+	// Add editor stylesheet.
+	add_editor_style('dist/css/editor-style.css');
 }
-add_action( 'after_setup_theme', '_s_setup' );
+add_action('after_setup_theme', '_bs_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -109,45 +114,95 @@ add_action( 'after_setup_theme', '_s_setup' );
  *
  * @global int $content_width
  */
-function _s_content_width() {
-	$GLOBALS['content_width'] = apply_filters( '_s_content_width', 640 );
+function _bs_content_width()
+{
+	$GLOBALS['content_width'] = apply_filters('_bs_content_width', 720);
 }
-add_action( 'after_setup_theme', '_s_content_width', 0 );
+add_action('after_setup_theme', '_bs_content_width', 0);
 
 /**
  * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function _s_widgets_init() {
+function _bs_widgets_init()
+{
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', '_s' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', '_s' ),
+			'name' => esc_html__('Sidebar', '_bs'),
+			'id' => 'sidebar-1',
+			'description' => esc_html__('Add widgets here.', '_bs'),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
+			'after_widget' => '</section>',
+			'before_title' => '<h2 class="widget-title">',
+			'after_title' => '</h2>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name' => esc_html__('Footer 1', '_bs'),
+			'id' => 'footer-1',
+			'description' => esc_html__('First footer widget area.', '_bs'),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name' => esc_html__('Footer 2', '_bs'),
+			'id' => 'footer-2',
+			'description' => esc_html__('Second footer widget area.', '_bs'),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name' => esc_html__('Footer 3', '_bs'),
+			'id' => 'footer-3',
+			'description' => esc_html__('Third footer widget area.', '_bs'),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
 		)
 	);
 }
-add_action( 'widgets_init', '_s_widgets_init' );
+add_action('widgets_init', '_bs_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function _s_scripts() {
-	wp_enqueue_style( '_s-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( '_s-style', 'rtl', 'replace' );
+function _bs_scripts()
+{
+	// Main theme styles (compiled from SCSS).
+	wp_enqueue_style('_bs-style', get_template_directory_uri() . '/dist/css/main.css', array(), _BS_VERSION);
+	wp_style_add_data('_bs-style', 'rtl', 'replace');
 
-	wp_enqueue_script( '_s-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	// Bootstrap Icons.
+	wp_enqueue_style('bootstrap-icons', get_template_directory_uri() . '/dist/css/bootstrap-icons.css', array(), '1.11.3');
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+	// Custom CSS (for user customizations - loads last to override everything).
+	wp_enqueue_style('_bs-custom', get_template_directory_uri() . '/assets/css/custom.css', array('_bs-style'), _BS_VERSION);
+
+	// Theme JavaScript (with Bootstrap bundled).
+	wp_enqueue_script('_bs-scripts', get_template_directory_uri() . '/dist/js/main.js', array(), _BS_VERSION, true);
+
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
 	}
 }
-add_action( 'wp_enqueue_scripts', '_s_scripts' );
+add_action('wp_enqueue_scripts', '_bs_scripts');
+
+/**
+ * Load Bootstrap Nav Walker.
+ */
+require get_template_directory() . '/inc/class-bs-navwalker.php';
 
 /**
  * Implement the Custom Header feature.
@@ -172,13 +227,80 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
 /**
  * Load WooCommerce compatibility file.
  */
-if ( class_exists( 'WooCommerce' ) ) {
+if (class_exists('WooCommerce')) {
 	require get_template_directory() . '/inc/woocommerce.php';
 }
+
+/**
+ * Add Bootstrap classes to comment form fields.
+ */
+function _bs_comment_form_fields($fields)
+{
+	$commenter = wp_get_current_commenter();
+	$req = get_option('require_name_email');
+	$html_req = ($req ? " required='required'" : '');
+
+	$fields['author'] = sprintf(
+		'<div class="comment-form-author mb-3"><label for="author" class="form-label">%s%s</label><input id="author" name="author" type="text" class="form-control" value="%s" maxlength="245"%s /></div>',
+		esc_html__('Name', '_bs'),
+		($req ? ' <span class="required">*</span>' : ''),
+		esc_attr($commenter['comment_author']),
+		$html_req
+	);
+
+	$fields['email'] = sprintf(
+		'<div class="comment-form-email mb-3"><label for="email" class="form-label">%s%s</label><input id="email" name="email" type="email" class="form-control" value="%s" maxlength="100" aria-describedby="email-notes"%s /></div>',
+		esc_html__('Email', '_bs'),
+		($req ? ' <span class="required">*</span>' : ''),
+		esc_attr($commenter['comment_author_email']),
+		$html_req
+	);
+
+	$fields['url'] = sprintf(
+		'<div class="comment-form-url mb-3"><label for="url" class="form-label">%s</label><input id="url" name="url" type="url" class="form-control" value="%s" maxlength="200" /></div>',
+		esc_html__('Website', '_bs'),
+		esc_attr($commenter['comment_author_url'])
+	);
+
+	return $fields;
+}
+add_filter('comment_form_default_fields', '_bs_comment_form_fields');
+
+/**
+ * Add Bootstrap class to comment textarea.
+ */
+function _bs_comment_form_defaults($defaults)
+{
+	$defaults['comment_field'] = sprintf(
+		'<div class="comment-form-comment mb-3"><label for="comment" class="form-label">%s</label><textarea id="comment" name="comment" class="form-control" rows="5" required="required"></textarea></div>',
+		esc_html__('Comment', '_bs')
+	);
+
+	$defaults['submit_button'] = '<button type="submit" name="%1$s" id="%2$s" class="btn btn-primary %3$s">%4$s</button>';
+	$defaults['class_submit'] = 'submit';
+
+	return $defaults;
+}
+add_filter('comment_form_defaults', '_bs_comment_form_defaults');
+
+/**
+ * Add Bootstrap classes to search form.
+ */
+function _bs_search_form($form)
+{
+	$form = '<form role="search" method="get" class="search-form d-flex gap-2" action="' . esc_url(home_url('/')) . '">
+		<label class="visually-hidden" for="s">' . esc_html__('Search for:', '_bs') . '</label>
+		<input type="search" id="s" class="search-field form-control" placeholder="' . esc_attr__('Search...', '_bs') . '" value="' . get_search_query() . '" name="s" />
+		<button type="submit" class="search-submit btn btn-primary"><i class="bi bi-search"></i><span class="visually-hidden">' . esc_html__('Search', '_bs') . '</span></button>
+	</form>';
+
+	return $form;
+}
+add_filter('get_search_form', '_bs_search_form');

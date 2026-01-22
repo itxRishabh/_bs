@@ -1,0 +1,210 @@
+// ==========================================================================
+// Comments Component
+// Comment list and form styles
+// ==========================================================================
+
+.comments-area {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid $border-color;
+}
+
+.comments-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+// Comment list
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .comment,
+    .pingback,
+    .trackback {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba($border-color, 0.5);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    // Nested comments
+    .children {
+        list-style: none;
+        padding-left: 2rem;
+        margin-top: 1.5rem;
+        border-left: 2px solid rgba($primary, 0.2);
+    }
+}
+
+// Comment body
+.comment-body {
+    display: flex;
+    gap: 1rem;
+}
+
+.comment-author {
+    flex-shrink: 0;
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .fn {
+        display: block;
+        font-weight: 600;
+        font-style: normal;
+
+        a {
+            color: $dark;
+            text-decoration: none;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+
+    .says {
+        display: none;
+    }
+}
+
+.comment-content-wrap {
+    flex: 1;
+}
+
+.comment-metadata {
+    font-size: 0.8rem;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+
+    a {
+        color: $text-muted;
+        text-decoration: none;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    .edit-link {
+        margin-left: 1rem;
+    }
+}
+
+.comment-content {
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.reply {
+    margin-top: 0.75rem;
+
+    .comment-reply-link {
+        @extend .btn;
+        @extend .btn-sm;
+        @extend .btn-outline-primary;
+    }
+}
+
+// Pingback/Trackback
+.pingback,
+.trackback {
+    .comment-body {
+        display: block;
+    }
+}
+
+// Comment awaiting moderation
+.comment-awaiting-moderation {
+    @extend .alert;
+    @extend .alert-info;
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+}
+
+// Comment form
+.comment-respond {
+    margin-top: 2rem;
+}
+
+.comment-reply-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+
+    small {
+        margin-left: 0.5rem;
+
+        a {
+            font-size: 0.875rem;
+        }
+    }
+}
+
+.comment-form {
+    .comment-notes {
+        font-size: 0.875rem;
+        color: $text-muted;
+        margin-bottom: 1rem;
+    }
+
+    .comment-form-author,
+    .comment-form-email,
+    .comment-form-url,
+    .comment-form-comment {
+        margin-bottom: 1rem;
+
+        label {
+            @extend .form-label;
+        }
+
+        input,
+        textarea {
+            @extend .form-control;
+        }
+    }
+
+    .comment-form-cookies-consent {
+        @extend .form-check;
+        margin-bottom: 1rem;
+
+        input {
+            @extend .form-check-input;
+        }
+
+        label {
+            @extend .form-check-label;
+        }
+    }
+
+    .form-submit {
+        .submit {
+            @extend .btn;
+            @extend .btn-primary;
+        }
+    }
+}
+
+// Comment navigation
+.comment-navigation {
+    margin: 1.5rem 0;
+
+    .nav-links {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    a {
+        @extend .btn;
+        @extend .btn-outline-secondary;
+        @extend .btn-sm;
+    }
+}
