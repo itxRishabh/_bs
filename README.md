@@ -1,95 +1,158 @@
-# _bs - WordPress Starter Theme for Bootstrap 5
+# _bs — Bootstrap 5 WordPress Starter Theme
 
-A modern WordPress starter theme built for Bootstrap 5 development. Based on `_s` (Underscores) with complete Bootstrap integration.
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg)](https://getbootstrap.com/)
+[![WordPress](https://img.shields.io/badge/WordPress-6.x-blue.svg)](https://wordpress.org/)
 
-**Created by:** [Rishabh](https://rishabhdev.site/)
+A modern WordPress starter theme with first-class Bootstrap 5 integration. Based on [Underscores (_s)](https://underscores.me/) by Automattic.
 
 ---
 
-## What is this?
+## ✨ Features
 
-_bs is my personal WordPress starter theme that I use as a foundation for building custom WordPress themes. Instead of starting from scratch every time, I start with _bs which already has Bootstrap 5 properly integrated.
-
-## Features
-
-- **Bootstrap 5.3** — Full integration with SCSS customization
-- **Vite Build System** — Fast development with hot reload
-- **Bootstrap Nav Walker** — WordPress menus with dropdowns
-- **Block Editor Support** — theme.json for Gutenberg
+- **Bootstrap 5.3** — Full framework with SCSS customization
+- **Vite Build System** — Lightning-fast development with HMR
+- **Bootstrap Nav Walker** — WordPress menus with Bootstrap dropdowns
+- **Block Editor Support** — theme.json for Gutenberg compatibility
 - **Bootstrap Icons** — 1,800+ icons included
-- **WooCommerce Ready** — Shop pages pre-styled
-- **Responsive** — Mobile-first templates
+- **WooCommerce Ready** — Shop pages pre-styled with Bootstrap
+- **Responsive** — Mobile-first design throughout
+- **Accessibility** — WCAG-compliant markup
 
 ---
 
-## How to Use
+## 🚀 Quick Start
 
-### Simple Way (No npm needed)
+### Option 1: Simple (No build tools)
 
-1. Download this theme
+Perfect for beginners or quick projects:
+
+1. [Download the latest release](https://github.com/itxRishabh/_bs/releases)
 2. Upload to `wp-content/themes/`
-3. Activate in WordPress
+3. Activate in WordPress → Appearance → Themes
 4. Start building!
 
-### With Build Tools (For SCSS customization)
+> 💡 The compiled CSS/JS is included — no npm required!
+
+### Option 2: With Build Tools
+
+For full SCSS customization:
 
 ```bash
+# Clone the repo
+git clone https://github.com/itxRishabh/_bs.git your-theme-name
+
+# Install dependencies
+cd your-theme-name
 npm install
+
+# Build for production
 npm run build
 ```
 
-**Development:**
+**Development commands:**
 ```bash
-npm run dev    # Start dev server
+npm run dev    # Start dev server with HMR
 npm run watch  # Watch for changes
 npm run build  # Production build
 ```
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 _bs/
 ├── dist/               # Compiled CSS/JS (auto-generated)
 ├── src/
 │   ├── scss/           # SCSS source files
+│   │   ├── _variables.scss    # Bootstrap overrides
+│   │   ├── components/        # Theme components
+│   │   ├── wordpress/         # WP-specific styles
+│   │   └── plugins/           # WooCommerce styles
 │   └── js/             # JavaScript source
 ├── inc/                # PHP includes
+│   ├── class-bs-navwalker.php # Bootstrap nav walker
+│   └── woocommerce.php        # WooCommerce integration
 ├── template-parts/     # Reusable template pieces
-├── assets/css/         # custom.css for overrides
-├── vite.config.js
+├── assets/css/         # custom.css for quick overrides
 ├── theme.json          # Block editor config
 └── functions.php
 ```
 
 ---
 
-## Customization
+## 🎨 Customization
 
 ### Change Colors
+
 Edit `src/scss/_variables.scss`:
 ```scss
-$primary: #your-color;
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+// ... customize any Bootstrap variable
 ```
 
-### Add Custom CSS
+Then run `npm run build`.
+
+### Quick CSS Overrides
+
 Edit `assets/css/custom.css` — no build needed!
 
+```css
+/* Your custom styles here */
+.site-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+```
+
 ### Full Documentation
-See [DOCS.md](DOCS.md) for complete guide.
+
+📖 **[Read the full documentation →](DOCS.md)**
 
 ---
 
-## Tech Stack
+## 🛒 WooCommerce Support
 
-- WordPress 6.x
-- Bootstrap 5.3
-- Vite
-- SCSS
+_bs includes complete WooCommerce integration:
+
+- ✅ Product grids with Bootstrap cards
+- ✅ Styled cart and checkout
+- ✅ My Account pages
+- ✅ Product galleries
+- ✅ Sale badges and pricing
+
+No additional setup required — just install WooCommerce!
 
 ---
 
-## Credits
+## 🤝 Contributing
 
-Based on [Underscores (_s)](https://underscores.me/) by Automattic.
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+See our [Code of Conduct](CODE_OF_CONDUCT.md) for community guidelines.
+
+---
+
+## 📄 License
+
+This project is licensed under the GPL v2 or later — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Credits
+
+- Based on [Underscores (_s)](https://underscores.me/) by Automattic
+- [Bootstrap](https://getbootstrap.com/) by the Bootstrap team
+- [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+---
+
+**Built with ❤️ by [Rishabh](https://rishabhdev.site/)**
